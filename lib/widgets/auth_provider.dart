@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:login_demo/auth.dart';
+import 'package:login_demo/util/auth.dart';
 
 class AuthProvider extends InheritedWidget {
   const AuthProvider({Key key, Widget child, this.auth}) : super(key: key, child: child);

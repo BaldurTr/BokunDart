@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:login_demo/auth.dart';
-import 'package:login_demo/auth_provider.dart';
+import 'package:login_demo/util/auth.dart';
+import 'package:login_demo/widgets/auth_provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({this.onSignedOut});
@@ -23,14 +23,20 @@ class HomePage extends StatelessWidget {
         title: Text('Logged in'),
         actions: <Widget>[
           FlatButton(
-            child: Text('Logout', style: TextStyle(fontSize: 17.0, color: Colors.white)),
+            child: Text('Logout',
+                style: TextStyle(fontSize: 17.0, color: Colors.white)),
             onPressed: () => _signOut(context),
           )
         ],
       ),
-      body: Container(
-        child: Center(child: Text('Play darts', style: TextStyle(fontSize: 32.0))),
-      ),
+      body: Column(
+          children: <Widget>[
+            Image.asset('assets/bokun.jpg'),
+            Container(
+              child: Center(
+                  child: Text('Play darts', style: TextStyle(fontSize: 32.0))),
+            )
+          ]),
     );
   }
 }

@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:login_demo/auth.dart';
-import 'package:login_demo/auth_provider.dart';
-import 'package:login_demo/pages/login_page.dart';
+import 'package:login_demo/util/auth.dart';
+import 'package:login_demo/widgets/auth_provider.dart';
+import 'package:login_demo/screens/login_page.dart';
 import 'package:mockito/mockito.dart';
 
 class MockAuth extends Mock implements BaseAuth {}

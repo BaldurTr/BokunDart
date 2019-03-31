@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:login_demo/auth.dart';
-import 'package:login_demo/auth_provider.dart';
+import 'package:login_demo/util/auth.dart';
+import 'package:login_demo/widgets/auth_provider.dart';
 
 class EmailFieldValidator {
   static String validate(String value) {

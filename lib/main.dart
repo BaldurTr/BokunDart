@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:login_demo/auth.dart';
-import 'package:login_demo/auth_provider.dart';
-import 'package:login_demo/pages/root_page.dart';
+import 'package:login_demo/util/auth.dart';
+import 'package:login_demo/widgets/auth_provider.dart';
+import 'package:login_demo/screens/root_page.dart';
 
 void main() => runApp(MyApp());
 

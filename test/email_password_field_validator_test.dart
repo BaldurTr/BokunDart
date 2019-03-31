@@ -1,5 +1,5 @@
 
-import 'package:login_demo/pages/login_page.dart';
+import 'package:login_demo/screens/login_page.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
