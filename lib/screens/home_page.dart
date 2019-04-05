@@ -29,14 +29,36 @@ class HomePage extends StatelessWidget {
           )
         ],
       ),
-      body: Column(
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
           children: <Widget>[
-            Image.asset('assets/bokun.jpg'),
-            Container(
-              child: Center(
-                  child: Text('Play darts', style: TextStyle(fontSize: 32.0))),
+            DrawerHeader(
+              child: Text('Menu'),
+              decoration: BoxDecoration(color: Colors.blue),
+            ),
+            ListTile(
+              title: Text('Leaderboard'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text('Settings'),
+              onTap: () {
+                Navigator.pop(context);
+              },
             )
-          ]),
+          ],
+        ),
+      ),
+      body: Column(children: <Widget>[
+        Image.asset('assets/bokun.jpg'),
+        Container(
+          child: Center(
+              child: Text('Play darts', style: TextStyle(fontSize: 32.0))),
+        )
+      ]),
     );
   }
 }
