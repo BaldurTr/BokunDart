@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:login_demo/util/auth.dart';
 import 'package:login_demo/widgets/auth_provider.dart';
+import 'package:login_demo/screens/leaderboard_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({this.onSignedOut});
@@ -40,7 +41,10 @@ class HomePage extends StatelessWidget {
             ListTile(
               title: Text('Leaderboard'),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute<LeaderBoard>(
+                        builder: (context) => LeaderBoard()));
               },
             ),
             ListTile(
