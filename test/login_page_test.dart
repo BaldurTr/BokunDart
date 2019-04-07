@@ -22,10 +22,10 @@ void main() {
 
   testWidgets('email or password is empty, does not sign in', (WidgetTester tester) async {
 
-    MockAuth mockAuth = MockAuth();
+    final MockAuth mockAuth = MockAuth();
 
     bool didSignIn = false;
-    LoginPage page = LoginPage(onSignedIn: () => didSignIn = true);
+    final LoginPage page = LoginPage(onSignedIn: () => didSignIn = true);
 
     await tester.pumpWidget(makeTestableWidget(child: page, auth: mockAuth));
 
@@ -37,18 +37,18 @@ void main() {
 
   testWidgets('non-empty email and password, valid account, call sign in, succeed', (WidgetTester tester) async {
 
-    MockAuth mockAuth = MockAuth();
+    final MockAuth mockAuth = MockAuth();
     when(mockAuth.signInWithEmailAndPassword('email', 'password')).thenAnswer((invocation) => Future.value('uid'));
 
     bool didSignIn = false;
-    LoginPage page = LoginPage(onSignedIn: () => didSignIn = true);
+    final LoginPage page = LoginPage(onSignedIn: () => didSignIn = true);
 
     await tester.pumpWidget(makeTestableWidget(child: page, auth: mockAuth));
     
-    Finder emailField = find.byKey(Key('email'));
+    final Finder emailField = find.byKey(Key('email'));
     await tester.enterText(emailField, 'email');
 
-    Finder passwordField = find.byKey(Key('password'));
+    final Finder passwordField = find.byKey(Key('password'));
     await tester.enterText(passwordField, 'password');
 
     await tester.tap(find.byKey(Key('signIn')));
@@ -60,18 +60,18 @@ void main() {
 
   testWidgets('non-empty email and password, valid account, call sign in, fails', (WidgetTester tester) async {
 
-    MockAuth mockAuth = MockAuth();
+    final MockAuth mockAuth = MockAuth();
     when(mockAuth.signInWithEmailAndPassword('email', 'password')).thenThrow(StateError('invalid credentials'));
 
     bool didSignIn = false;
-    LoginPage page = LoginPage(onSignedIn: () => didSignIn = true);
+    final LoginPage page = LoginPage(onSignedIn: () => didSignIn = true);
 
     await tester.pumpWidget(makeTestableWidget(child: page, auth: mockAuth));
 
-    Finder emailField = find.byKey(Key('email'));
+    final Finder emailField = find.byKey(Key('email'));
     await tester.enterText(emailField, 'email');
 
-    Finder passwordField = find.byKey(Key('password'));
+    final Finder passwordField = find.byKey(Key('password'));
     await tester.enterText(passwordField, 'password');
 
     await tester.tap(find.byKey(Key('signIn')));
