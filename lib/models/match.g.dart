@@ -6,15 +6,15 @@ part of 'match.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Match _$MatchFromJson(Map<String, dynamic> json) {
-  return Match(
+DartMatch _$MatchFromJson(Map<String, dynamic> json) {
+  return DartMatch(
       json['against'] as String,
       json['date'] == null ? null : DateTime.parse(json['date'] as String),
       json['elo'] as int)
-    ..trumped = json['trumped'] == null ? false : json['trumped'] as bool;
+    ..trumped = json['trumped'] as bool;
 }
 
-Map<String, dynamic> _$MatchToJson(Match instance) => <String, dynamic>{
+Map<String, dynamic> _$MatchToJson(DartMatch instance) => <String, dynamic>{
       'against': instance.opponentId,
       'date': instance.date?.toIso8601String(),
       'elo': instance.finalElo,
