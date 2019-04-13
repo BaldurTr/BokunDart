@@ -1,41 +1,11 @@
-import 'dart:async';
-
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:login_demo/models/user.dart';
 
-class LeaderBoard extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => _LeaderBoardState();
-}
+class LeaderBoard extends StatelessWidget {
 
-final DatabaseReference usersReference =
-    FirebaseDatabase.instance.reference().child('users');
+  const LeaderBoard({this.users});
 
-class _LeaderBoardState extends State<LeaderBoard> {
-  List<User> users;
-  StreamSubscription<Event> _onUserAddedSubscription;
-
-  @override
-  void initState() {
-    super.initState();
-
-    users = <User>[];
-
-    _onUserAddedSubscription = usersReference.onChildAdded.listen(_onUserAdded);
-  }
-
-  @override
-  void dispose() {
-    _onUserAddedSubscription.cancel();
-    super.dispose();
-  }
-
-  void _onUserAdded(Event event) {
-    setState(() {
-      users.add(User.fromSnapshot(event.snapshot));
-    });
-  }
+  final List<User> users;
 
   @override
   Widget build(BuildContext context) {
@@ -51,11 +21,17 @@ class _LeaderBoardState extends State<LeaderBoard> {
               return Column(
                 children: <Widget>[
                   ListTile(
+                    dense: true,
                     leading: CircleAvatar(
                       backgroundImage:
                           NetworkImage('${users[position].photoUrl}'),
                     ),
                     title: Text('${users[position].userName}'),
+                    subtitle: Text('Elo: ${users[position].lastEloMatch.finalElo}'),
+                  ),
+                  Divider(
+                    height: 2.0,
+                    color: Colors.grey,
                   )
                 ],
               );
