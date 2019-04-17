@@ -1,4 +1,4 @@
-package com.flutter.logindemo;
+package is.baldurtr.bokundart;
 
 import android.os.Bundle;
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:login_demo/util/auth.dart';
-import 'package:login_demo/screens/home_page.dart';
-import 'package:login_demo/screens/login_page.dart';
-import 'package:login_demo/widgets/auth_provider.dart';
+import 'package:bokun_dart/util/auth.dart';
+import 'package:bokun_dart/screens/home_page.dart';
+import 'package:bokun_dart/screens/login_page.dart';
+import 'package:bokun_dart/widgets/auth_provider.dart';
 
 class RootPage extends StatefulWidget {
   @override

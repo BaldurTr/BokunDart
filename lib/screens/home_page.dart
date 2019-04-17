@@ -1,12 +1,13 @@
 import 'dart:async';
 
+import 'package:bokun_dart/widgets/navigation_drawer.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:login_demo/util/auth.dart';
-import 'package:login_demo/widgets/auth_provider.dart';
-import 'package:login_demo/screens/leaderboard_page.dart';
-import 'package:login_demo/models/user.dart';
-import 'package:login_demo/models/match.dart';
+import 'package:bokun_dart/util/auth.dart';
+import 'package:bokun_dart/widgets/auth_provider.dart';
+import 'package:bokun_dart/models/user.dart';
+import 'package:bokun_dart/models/match.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({this.onSignedOut});
@@ -29,6 +30,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  User currentUser;
   List<User> users;
   StreamSubscription<Event> _onUserAddedSubscription;
   String _currentMonthKey;
@@ -39,7 +41,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-
     final DateTime currentDate = DateTime.now();
     _currentMonthKey = '${currentDate.year}-${currentDate.month - 1}';
     users = <User>[];
@@ -60,48 +61,22 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final BaseAuth auth = AuthProvider.of(context).auth;
+    final String currentUserId = await auth.currentUser().
+    final currentUser = users.where((User user) => user.id == auth.currentUser());
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Logged in'),
-        actions: <Widget>[
-          FlatButton(
-            child: Text('Logout',
-                style: TextStyle(fontSize: 17.0, color: Colors.white)),
-            onPressed: () => widget._signOut(context),
-          )
-        ],
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              child: Text('Menu'),
-              decoration: BoxDecoration(color: Colors.blue),
-            ),
-            ListTile(
-              title: Text('Leaderboard'),
-              onTap: () {
-                print(_currentMonthKey);
-                Navigator.push(
-                    context,
-                    MaterialPageRoute<LeaderBoard>(
-                        builder: (BuildContext context) => LeaderBoard(
-                              users: _getCurrentMonthUsers(),
-                            )));
-              },
-            ),
-            ListTile(
-              title: Text('Settings'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            )
-          ],
-        ),
-      ),
+      appBar: AppBar(),
+      drawer: NavigationDrawer(users.where((User user) => user.id == auth.currentUser()).first., _getCurrentMonthUsers, widget._signOut),
       body: Column(children: <Widget>[
-        Image.asset('assets/bokun.jpg'),
+        Hero(
+          tag: 'bokun_logo_color',
+          child: SvgPicture.asset(
+            'assets/bokun-logo.svg',
+            height: 80.0,
+            width: 80.0,
+          ),
+        ),
         Container(
           child: Center(
               child: Text('Play darts', style: TextStyle(fontSize: 32.0))),
@@ -111,7 +86,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   List<User> _getCurrentMonthUsers() {
-    List<User> usersWithScoresThisMonth = users.where((User user) => user.monthlyElo.containsKey(_currentMonthKey)).toList();
+    List<User> usersWithScoresThisMonth = users
+        .where((User user) => user.monthlyElo.containsKey(_currentMonthKey))
+        .toList();
     usersWithScoresThisMonth.sort((User a, User b) {
       DartMatch lastForA = a.lastEloMatch;
       DartMatch lastForB = b.lastEloMatch;

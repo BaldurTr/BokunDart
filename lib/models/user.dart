@@ -1,14 +1,14 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:login_demo/models/high_score.dart';
-import 'package:login_demo/models/match.dart';
+import 'package:bokun_dart/models/high_score.dart';
+import 'package:bokun_dart/models/match.dart';
 
 class User {
-  User(this._userName, this._email, this._photoUrl,
+  User(this._id, this._userName, this._email, this._photoUrl,
       this._gameHistory, this._highScores, this._monthlyElo);
 
   User.fromSnapshot(DataSnapshot snapshot) {
     final snap_data = Map<String, dynamic>.from(snapshot.value);
-
+    _id = snapshot.key;
     _userName = snap_data['username'];
     _email = snap_data['email'];
     _photoUrl = snap_data['photoURL'];
@@ -55,6 +55,7 @@ class User {
     return matches;
   }
 
+  String _id;
   String _userName;
   String _email;
   String _photoUrl;
@@ -62,6 +63,7 @@ class User {
   List<DartMatch> _gameHistory;
   List<HighScore> _highScores;
 
+  String get id => _id;
   String get userName => _userName;
   String get email => _email;
   String get photoUrl => _photoUrl;

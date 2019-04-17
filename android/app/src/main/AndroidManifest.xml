@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.flutter.logindemo">
+    package="is.baldurtr.bokundart">
 
     <!-- The INTERNET permission is required for development. Specifically,
          flutter needs it to communicate with the running application
@@ -14,7 +14,7 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="login_demo"
+        android:label="bokun_dart"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

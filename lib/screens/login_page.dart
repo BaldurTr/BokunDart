@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:login_demo/util/auth.dart';
-import 'package:login_demo/widgets/auth_provider.dart';
+import 'package:bokun_dart/util/auth.dart';
+import 'package:bokun_dart/widgets/auth_provider.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class EmailFieldValidator {
   static String validate(String value) {
@@ -48,10 +49,12 @@ class _LoginPageState extends State<LoginPage> {
       try {
         final BaseAuth auth = AuthProvider.of(context).auth;
         if (_formType == FormType.login) {
-          final String userId = await auth.signInWithEmailAndPassword(_email, _password);
+          final String userId =
+              await auth.signInWithEmailAndPassword(_email, _password);
           print('Signed in: $userId');
         } else {
-          final String userId = await auth.createUserWithEmailAndPassword(_email, _password);
+          final String userId =
+              await auth.createUserWithEmailAndPassword(_email, _password);
           print('Registered user: $userId');
         }
         widget.onSignedIn();
@@ -75,66 +78,139 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
+  final Hero logo = Hero(
+    tag: 'bokun_logo_color',
+    child: SvgPicture.asset(
+      'assets/bokun-logo.svg',
+      height: 80.0,
+      width: 80.0,
+    ),
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Bokun Dart'),
-      ),
+//      body: Container(
+//        decoration: BoxDecoration(
+//            image: DecorationImage(
+//                image:
+//                    AssetImage('assets/daniel-leone-185834-unsplash-1920.jpg'),
+//                fit: BoxFit.cover)),
+//        padding: EdgeInsets.all(16.0),
+//        child: Form(
+//          key: formKey,
+//          child: Column(
+//            crossAxisAlignment: CrossAxisAlignment.stretch,
+//            children: buildInputs() + buildSubmitButtons(),
+//          ),
+//        ),
+//      ),
+      backgroundColor: Colors.white,
       body: Container(
-        padding: EdgeInsets.all(16.0),
         child: Form(
           key: formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: buildInputs() + buildSubmitButtons(),
+          child: Center(
+            child: ListView(
+              shrinkWrap: true,
+              padding: EdgeInsets.only(left: 24.0, right: 24.0),
+              children: createLoginForm(),
+            ),
           ),
         ),
       ),
     );
   }
 
-  List<Widget> buildInputs() {
-    return <Widget>[
-      TextFormField(
-        key: Key('email'),
-        decoration: InputDecoration(labelText: 'Email'),
-        validator: EmailFieldValidator.validate,
-        onSaved: (String value) => _email = value,
+  List<Widget> createLoginForm() {
+    List<Widget> items = <Widget>[
+      logo,
+      SizedBox(
+        height: 68.0,
       ),
-      TextFormField(
-        key: Key('password'),
-        decoration: InputDecoration(labelText: 'Password'),
-        obscureText: true,
-        validator: PasswordFieldValidator.validate,
-        onSaved: (String value) => _password = value,
+      email(),
+      SizedBox(
+        height: 28.0,
+      ),
+      password(),
+      SizedBox(
+        height: 28.0,
       ),
     ];
+    items.addAll(buildSubmitButtons());
+    return items;
+  }
+
+  Widget email() {
+    return TextFormField(
+      key: Key('email'),
+      keyboardType: TextInputType.emailAddress,
+      autofocus: false,
+      decoration: InputDecoration(
+          hintText: 'Email',
+          contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+          border:
+              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
+      validator: EmailFieldValidator.validate,
+      onSaved: (String value) => _email = value,
+    );
+  }
+
+  Widget password() {
+    return TextFormField(
+      key: Key('password'),
+      decoration: InputDecoration(
+          hintText: 'Password',
+          contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+          border:
+              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
+      obscureText: true,
+      validator: PasswordFieldValidator.validate,
+      onSaved: (String value) => _password = value,
+    );
   }
 
   List<Widget> buildSubmitButtons() {
     if (_formType == FormType.login) {
       return <Widget>[
-        RaisedButton(
-          key: Key('signIn'),
-          child: Text('Login', style: TextStyle(fontSize: 20.0)),
-          onPressed: validateAndSubmit,
-        ),
-        FlatButton(
-          child: Text('Create an account', style: TextStyle(fontSize: 20.0)),
-          onPressed: moveToRegister,
-        ),
+        Padding(
+            padding: EdgeInsets.symmetric(vertical: 16.0),
+            child: RaisedButton(
+              key: Key('signIn'),
+              child: Text('Login', style: TextStyle(fontSize: 20.0)),
+              onPressed: validateAndSubmit,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(32.0)),
+            )),
+        Padding(
+            padding: EdgeInsets.symmetric(vertical: 16.0),
+            child: FlatButton(
+              child:
+                  Text('Create an account', style: TextStyle(fontSize: 20.0)),
+              onPressed: moveToRegister,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(32.0)),
+            )),
       ];
     } else {
       return <Widget>[
-        RaisedButton(
-          child: Text('Create an account', style: TextStyle(fontSize: 20.0)),
-          onPressed: validateAndSubmit,
-        ),
-        FlatButton(
-          child: Text('Have an account? Login', style: TextStyle(fontSize: 20.0)),
-          onPressed: moveToLogin,
-        ),
+        Padding(
+            padding: EdgeInsets.symmetric(vertical: 16.0),
+            child: RaisedButton(
+              child:
+                  Text('Create an account', style: TextStyle(fontSize: 20.0)),
+              onPressed: validateAndSubmit,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(32.0)),
+            )),
+        Padding(
+            padding: EdgeInsets.symmetric(vertical: 16.0),
+            child: FlatButton(
+              child: Text('Have an account? Login',
+                  style: TextStyle(fontSize: 20.0)),
+              onPressed: moveToLogin,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(32.0)),
+            )),
       ];
     }
   }
