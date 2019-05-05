@@ -10,8 +10,9 @@ import 'package:bokun_dart/models/match.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({this.onSignedOut});
+  const HomePage({this.userId, this.onSignedOut});
   final VoidCallback onSignedOut;
+  final String userId;
 
   Future<void> _signOut(BuildContext context) async {
     try {
@@ -59,12 +60,13 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
+  User dummyUser = User('LKJSDF345', 'Balli', 'b@b.is', 'www.lkjsdf.com/balli', [], [], {});
+
   @override
   Widget build(BuildContext context) {
-    final BaseAuth auth = AuthProvider.of(context).auth;
     return Scaffold(
       appBar: AppBar(),
-      drawer: NavigationDrawer(users.where((user) => user.id == auth.currentUser()).first, _getCurrentMonthUsers, widget._signOut),
+      drawer: NavigationDrawer(users.isEmpty ? dummyUser : users.firstWhere((User user) => user.id == widget.userId), _getCurrentMonthUsers, widget._signOut),
       body: Column(children: <Widget>[
         Hero(
           tag: 'bokun_logo_color',
