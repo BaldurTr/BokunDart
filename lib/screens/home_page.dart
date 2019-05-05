@@ -62,12 +62,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final BaseAuth auth = AuthProvider.of(context).auth;
-    final String currentUserId = await auth.currentUser().
-    final currentUser = users.where((User user) => user.id == auth.currentUser());
-
     return Scaffold(
       appBar: AppBar(),
-      drawer: NavigationDrawer(users.where((User user) => user.id == auth.currentUser()).first., _getCurrentMonthUsers, widget._signOut),
+      drawer: NavigationDrawer(users.where((user) => user.id == auth.currentUser()).first, _getCurrentMonthUsers, widget._signOut),
       body: Column(children: <Widget>[
         Hero(
           tag: 'bokun_logo_color',
